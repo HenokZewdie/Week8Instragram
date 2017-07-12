@@ -11,7 +11,7 @@ public interface PhotoRepository extends CrudRepository<Photo, Long>{
     List<Photo> findAllByBotmessageIsNotAndTopmessageIsNot(String botmessage, String topmessage);
     List<Photo> findAllByBotmessageEqualsAndTopmessageEquals(String botmessage, String topmessage);
     List<Photo> findAllByType(String type);
-    Photo findDistinctByUsername(String name);
+    List <Photo> findByUsername(String name);
     Photo findById(Long id);
 
 }

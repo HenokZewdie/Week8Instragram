@@ -19,7 +19,7 @@
 
         <form method="POST" action="/upload" enctype="multipart/form-data" th:object="${p}">
                     <input type="file" name="file" /><br/><br/>
-                    <input type="text" th:field="*{type}"/>
+                    <input type="text" placeholder="Album Name" th:field="*{type}"/>
                     <input type="submit" value="Submit" />
                 </form>
             <div th:if="${message}">
