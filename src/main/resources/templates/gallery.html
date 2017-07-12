@@ -46,30 +46,33 @@
     <br /><br />
     <h1>Spring Boot file upload example</h1>
 
-
+    <table border="1">
     <div th:if="${message}">
         <h2 th:text="${message}"/><br/><br/>
     </div>
     <div class="row">
-        <table></table>
 
-    <div class="col-xs-3" th:each="photo : ${images}">
-            <img th:utext="${photo.image}" style="position:absolute; width: 200px;" />
-            <h2 class="top" th:text="${photo.topmessage}" style="position: absolute;
+        <tr><div class="col-xs-3" th:each="photo : ${images}">
+
+            <td>  <img th:utext="${photo.image}" style="position:absolute; width: 200px;" />
+                <h2 class="top" th:text="${photo.topmessage}" style="position: absolute;
                 top: 50px;
                 left: 150px;
                 width: 100px;
                 color: white;";/>
-            <h2 class="bottom" th:text="${photo.botmessage}" style=" position: absolute;
+                <h2 class="bottom" th:text="${photo.botmessage}" style=" position: absolute;
                  top:200px;
                 left: 150px;
                 width: 100px;
-                color: white;"/>
+                color: white;"/></td>
+        </div>  </tr>
 
-    </div>
+
+
         <br/><br/> <br/><br/>
 
     </div>
+    </table>
 </div><!-- /.container -->
 
 <th:block th:replace="base :: footlinks"></th:block>

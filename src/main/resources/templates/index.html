@@ -17,11 +17,11 @@
     <div class="container">
         <div class="jumbotron">
             <div class="container">
-                <h3>Mini LinkedIn</h3>
-                <p><h5>Another Big conflict
-                This is a template for a simple marketing or informational website. It includes a large callout called a jumbotron and three supporting pieces of content. Use it as a starting point to create something more unique.
-                This is a template for a simple marketing or informational website. It includes a large callout called a jumbotron and three supporting pieces of content. Use it as a starting point to create something more unique.</h5></p>
-                <p><a class="btn btn-primary btn-lg" href="#" role="button">More &raquo;</a></p>
+                <h2>Mini Instagram</h2>
+                <p style="color: #006699;" style="font-size: medium">    Instagram is a mobile, desktop, and internet-based photo-sharing application and service that allows users to share pictures and videos either publicly or privately.
+                    It was created by Kevin Systrom and Mike Krieger, and launched in October 2010 as a free mobile app exclusively for the iOS operating system.
+                    A version for Android devices was released two years later, in April 2012, followed by a feature-limited website interface in November 2012, and apps for Windows 10 Mobile and Windows 10 in April 2016 and October 2016 respectively.</p>
+                <p><a class="btn btn-primary btn-lg" href="https://en.wikipedia.org/wiki/Instagram"  target="_blank" role="button">More &raquo;</a>
             </div>
         </div>
         <!-- Example row of columns -->
@@ -73,10 +73,14 @@
                     <p><a class="btn btn-default" href="/upload" role="button">Upload  &raquo;</a></p>
                 </div>
 
-                <div class="col-md-4">
-                    <h2>Friends</h2>
-                    <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-                    <p><a class="btn btn-default" href="#" role="button">Read More &raquo;</a></p>
+                <div class="col-md-4" sec:authorize="isAuthenticated()">
+                    <h2>Photo</h2>
+                    <div class="col-xs-3" th:each="photo : ${single}">
+
+                      <img th:utext="${photo.image}" style="position:absolute; width: 200px;" />
+
+
+                    </div>   <p><a class="btn btn-default" href="#" role="button">Read More &raquo;</a></p>
                 </div>
             </div>
 
@@ -85,5 +89,7 @@
 </div><!-- /.container -->
 
 <th:block th:replace="base :: footlinks"></th:block>
+    </div>
+</div>
 </body>
 </html>

@@ -65,12 +65,14 @@ public class HomeController {
         return "registration";
     }
 
-    @RequestMapping("/memelink/{id}")
+    @RequestMapping("/memelink/{username}")
     public String linktoMeme(@PathVariable("id") Long id, Model model){
         Photo p = photoRepo.findById(id);
         List<Photo> plist = new ArrayList<Photo>();
         plist.add(p);
+        String single = p.getImage();
         model.addAttribute("images",plist);
+        model.addAttribute("single",single);
         return "gallery";
     }
 
@@ -105,7 +107,8 @@ public class HomeController {
     }
 
     @PostMapping("/upload")
-    public String singleImageUpload(@RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes, Model model, @ModelAttribute Photo p){
+    public String singleImageUpload(@RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes,
+                                    Model model, @ModelAttribute Photo p, Principal principal){
 
         if (file.isEmpty()){
             redirectAttributes.addFlashAttribute("message","Please select a file to upload");
@@ -118,9 +121,11 @@ public class HomeController {
             model.addAttribute("message",
                     "You successfully uploaded '" + file.getOriginalFilename() + "'");
             String filename = uploadResult.get("public_id").toString() + "." + uploadResult.get("format").toString();
-            p.setImage("<img src='http://res.cloudinary.com/henokzewdie/image/upload/c_scale,w_310/"+filename+"' width='300px'/>");
+
+            p.setImage("<img src='http://res.cloudinary.com/henokzewdie/image/upload/"+filename+"' width='200px'/>");
             //System.out.printf("%s\n", cloudc.createUrl(filename,900,900, "fit"));
             p.setCreatedAt(new Date());
+            p.setUsername(principal.getName());
             photoRepo.save(p);
             setupGallery(model);
         } catch (IOException e){
@@ -206,7 +211,7 @@ public class HomeController {
     public EmailService emailService;
     public void sendEmailWithoutTemplating(String username, String email2, Long id) throws UnsupportedEncodingException {
         final Email email = DefaultEmail.builder()
-                .from(new InternetAddress("daylinzack@gmail.com", "Admin Darth Vader"))
+                .from(new InternetAddress("daylinzack@gmail.com", "General Alaadin"))
                 .to(Lists.newArrayList(new InternetAddress(email2, username)))
                 .subject("Your meme is here and ready for consumption")
                 .body("Hi youre meme is: localhost:3000/memelink/" + String.valueOf(id) )
