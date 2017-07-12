@@ -44,11 +44,16 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
                 .antMatchers("/", "/register","/upload", "memelink/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .formLogin().loginPage("/login").permitAll()
+
+                .formLogin().failureUrl("/")
+                .defaultSuccessUrl("/loginSuccess")
+                .loginPage("/login");
+
+        http    .formLogin().loginPage("/login").permitAll()
                 .and()
                 .logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .logoutSuccessUrl("/").permitAll().permitAll()
+                .logoutSuccessUrl("/").permitAll()
                 .and()
                 .csrf().disable();
     }

@@ -59,6 +59,20 @@ public class HomeController {
         return "login";
     }
 
+    @RequestMapping(value = "/loginSuccess", method = RequestMethod.GET)
+    public String getLogin(Model model, Photo photo, Principal principal){
+        String loggedName = principal.getName();
+        photo = photoRepo.findDistinctByUsername(loggedName);
+        String url = photo.getImage();
+        model.addAttribute("srcSession", url);
+        return "profile";
+    }
+
+    @RequestMapping(value = "/profile", method = RequestMethod.GET)
+    public String profile(Model model){
+        model.addAttribute(new Photo());
+        return "/profile";
+    }
     @RequestMapping(value="/register", method = RequestMethod.GET)
     public String showRegistrationPage(Model model){
         model.addAttribute("user", new User());
