@@ -20,8 +20,10 @@
         <form method="POST" action="/upload" enctype="multipart/form-data" th:object="${p}">
                     <input type="file" name="file" /><br/><br/>
                     <input type="text" placeholder="Album Name" th:field="*{type}"/>
+                    <input type="text" th:field="*{title}"  placeholder="effect"/>
                     <input type="submit" value="Submit" />
                 </form>
+
             <div th:if="${message}">
                 <h2 th:text="${message}"/><br/><br/>
             </div>

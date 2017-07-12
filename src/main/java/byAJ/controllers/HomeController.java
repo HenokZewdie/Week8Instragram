@@ -72,6 +72,7 @@ public class HomeController {
         return "profile";
     }
 
+
     @RequestMapping(value = "/profile", method = RequestMethod.GET)
     public String profile(Model model){
         model.addAttribute(new Photo());
@@ -139,8 +140,8 @@ public class HomeController {
             model.addAttribute("message",
                     "You successfully uploaded '" + file.getOriginalFilename() + "'");
             String filename = uploadResult.get("public_id").toString() + "." + uploadResult.get("format").toString();
-
-            p.setImage("<img src='http://res.cloudinary.com/henokzewdie/image/upload/"+filename+"' width='200px'/>");
+            String effect = p.getTitle();
+            p.setImage("<img src='http://res.cloudinary.com/henokzewdie/image/upload/" + effect + "/" +filename+"' width='200px'/>");
             //System.out.printf("%s\n", cloudc.createUrl(filename,900,900, "fit"));
             p.setCreatedAt(new Date());
             p.setUsername(principal.getName());
