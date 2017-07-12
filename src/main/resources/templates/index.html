@@ -75,12 +75,8 @@
 
                 <div class="col-md-4" sec:authorize="isAuthenticated()">
                     <h2>Photo</h2>
-                    <div class="col-xs-3" th:each="photo : ${single}">
-
-                      <img th:utext="${photo.image}" style="position:absolute; width: 200px;" />
-
-
-                    </div>   <p><a class="btn btn-default" href="#" role="button">Read More &raquo;</a></p>
+                    <img src='http://res.cloudinary.com/henokzewdie/image/upload/v1499862754/pxyirbdgyabovrfra9bx.jpg' alt="HTML5 Icon" style="width:128px;height:128px;" />
+                    <p><a class="btn btn-default" href="#" role="button">Read More &raquo;</a></p>
                 </div>
             </div>
 
