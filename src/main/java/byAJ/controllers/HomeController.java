@@ -118,7 +118,7 @@ public class HomeController {
             model.addAttribute("message",
                     "You successfully uploaded '" + file.getOriginalFilename() + "'");
             String filename = uploadResult.get("public_id").toString() + "." + uploadResult.get("format").toString();
-            p.setImage("<img src='http://res.cloudinary.com/henokzewdie/image/upload/"+filename+"' width='500px'/>");
+            p.setImage("<img src='http://res.cloudinary.com/henokzewdie/image/upload/c_scale,w_310/"+filename+"' width='300px'/>");
             //System.out.printf("%s\n", cloudc.createUrl(filename,900,900, "fit"));
             p.setCreatedAt(new Date());
             photoRepo.save(p);
