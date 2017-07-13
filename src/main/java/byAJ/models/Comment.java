@@ -8,7 +8,7 @@ import javax.persistence.Id;
 import java.util.Date;
 
 @Entity
-public class comment {
+public class Comment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

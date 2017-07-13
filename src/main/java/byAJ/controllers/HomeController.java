@@ -1,8 +1,10 @@
 package byAJ.controllers;
 
 import byAJ.configs.CloudinaryConfig;
+import byAJ.models.Comment;
 import byAJ.models.Photo;
 import byAJ.models.User;
+import byAJ.repositories.CommentRepository;
 import byAJ.repositories.PhotoRepository;
 import byAJ.services.UserService;
 import byAJ.validators.UserValidator;
@@ -49,6 +51,9 @@ public class HomeController {
     @Autowired
     private PhotoRepository photoRepo;
 
+    @Autowired
+    private CommentRepository commentRepository;
+
     @RequestMapping("/")
     public String index(){
         return "index";
@@ -70,7 +75,6 @@ public class HomeController {
             newList.add(pl.getImage());
            url  = pl.getImage();
         }
-
         model.addAttribute("srcSession", url);
         model.addAttribute("Album",photoList);
         return "profile";
@@ -242,4 +246,16 @@ public class HomeController {
         emailService.send(email);
     }
 
+    @RequestMapping(value = "/commenting", method = RequestMethod.GET)
+    public String commentGet(Model model){
+        model.addAttribute("comment", new Comment());
+        return "commenting";
+    }
+    @RequestMapping(value = "/commenting", method = RequestMethod.POST)
+    public String commentPost(@ModelAttribute Comment comment, Model model, Principal principal){
+        comment.setUsername(principal.getName());
+        model.addAttribute(new Date());
+        commentRepository.save(comment);
+        return "profile";
+    }
 }

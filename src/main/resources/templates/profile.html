@@ -1,83 +1,86 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="www.thymeleaf.org " xmlns:sec="www.thymeleaf.org/extras/spring-security">
 <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>Bootstrap 101 Template</title>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+<title>Bootstrap 101 Template</title>
 
-    <th:block th:replace="base1 :: Mena"></th:block>
+<th:block th:replace="base1 :: Mena"></th:block>
 </head>
 <body>
 <th:block th:replace="base1 :: navi"></th:block>
 
 <div class="container">
-    <br /><br />
-    <div class="container">
+<br /><br />
+<div class="container">
 
-            <h3>Photo Album</h3></p>
-            <div class="row">      <!--<img th:utext="${srcSession}"/>-->
-            <div class="col-xs-3" th:each="photo : ${Album}">
+    <h3>Photo Album</h3></p>
 
-                <img th:utext="${photo.image}"  /></div>
-                <!-- Example row of columns --></div>
-        <div class="row">
-            <div class="col-md-3">
-                <h2>Current User</h2>
-                Logged in User:
-                <div sec:authentication="name">
-                    The value of the "name" property of the authentication object should appear here.
-                </div>
-                <div sec:authorize="isAuthenticated()">
-                    This content is only shown to authenticated users.<br />
-                    Logged user: <span sec:authentication="name">Bob</span>
-                    Roles: <span sec:authentication="principal.authorities">[ROLE_USER, ROLE_ADMIN]</span>
-                </div>
-                <div sec:authorize="hasAuthority('ADMIN')" >
-                    This content is only shown to administrators.
-                </div>
-                <div sec:authorize="hasAuthority('USER')" >
-                    This content is only shown to users.
-                </div>
-            </div>
-            <div class="row" sec:authorize="isAnonymous()">
+    <div class="row">
 
-                <div class="col-md-4">
+    <div class="col-xs-3" th:each="photo : ${Album}">
 
-                    <div th:if="${param.error}">
-                        Invalid username and password.
-                    </div>
-                    <div th:if="${param.logout}">
-                        You have been logged out.
-                    </div>
-                    <form th:action="@{/login}" th:object="${user}" method="post" >
-                        <div><label> User Name : <input type="text" name="username"/> </label></div>
-                        <div><label> Password: <input type="password" name="password"/> </label></div>
-                        <div><input type="submit" value="Sign In"/></div>
-                    </form>
-                </div>
-                <div class="col-md-4">
-                    <h2>Register</h2>
-                    <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-                    <p><a class="btn btn-default" href="/register" role="button">SignUp &raquo;</a></p>
-                </div>
-            </div>
-            <div class="row" sec:authorize="isAuthenticated()">
-                <div class="col-md-4">
-                    <h2>Upload Photo</h2>
-                    <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-                    <p><a class="btn btn-default" href="/upload" role="button">Upload  &raquo;</a></p>
-                </div>
-                <h2>Profile Pic</h2>
-                <img th:utext="${srcSession}"/>
-            </div>
+        <img th:utext="${photo.image}"  />
+
+    </div>
+    </div>
+
+
+<div class="row">
+    <div class="col-md-3">
+        <h2>Current User</h2>
+        Logged in User:
+        <div sec:authentication="name">
+            The value of the "name" property of the authentication object should appear here.
         </div>
+        <div sec:authorize="isAuthenticated()">
+            This content is only shown to authenticated users.<br />
+            Logged user: <span sec:authentication="name">Bob</span>
+            Roles: <span sec:authentication="principal.authorities">[ROLE_USER, ROLE_ADMIN]</span>
+        </div>
+        <div sec:authorize="hasAuthority('ADMIN')" >
+            This content is only shown to administrators.
+        </div>
+        <div sec:authorize="hasAuthority('USER')" >
+            This content is only shown to users.
+        </div>
+    </div>
+    <div class="row" sec:authorize="isAnonymous()">
 
+        <div class="col-md-4">
 
+            <div th:if="${param.error}">
+                Invalid username and password.
+            </div>
+            <div th:if="${param.logout}">
+                You have been logged out.
+            </div>
+            <form th:action="@{/login}" th:object="${user}" method="post" >
+                <div><label> User Name : <input type="text" name="username"/> </label></div>
+                <div><label> Password: <input type="password" name="password"/> </label></div>
+                <div><input type="submit" value="Sign In"/></div>
+            </form>
+        </div>
+        <div class="col-md-4">
+            <h2>Register</h2>
+            <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
+            <p><a class="btn btn-default" href="/register" role="button">SignUp &raquo;</a></p>
+        </div>
+    </div>
+    <div class="row" sec:authorize="isAuthenticated()">
+        <div class="col-md-4">
+            <h2>Upload Photo</h2>
+            <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
+            <p><a class="btn btn-default" href="/upload" role="button">Upload  &raquo;</a></p>
+        </div>
+        <h2>Profile Pic</h2>
+        <img th:utext="${srcSession}"/>
+    </div>
+</div>
 
-    </div><!-- /.container -->
-
+</div><!-- /.container -->
 
 </div>
 </div>
