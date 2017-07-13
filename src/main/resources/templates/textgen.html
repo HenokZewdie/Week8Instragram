@@ -15,6 +15,9 @@
         document.getElementById('number').value = value;
     }
 
+        var elem = document.getElementById("myButton1");
+        elem.value = value;
+
 </script>
     <th:block th:replace="base1 :: Mena"></th:block>
 </head>
@@ -28,30 +31,16 @@
         <img th:utext="${photo.image}" /></a>
 <br/><br/>
 
-
   <form th:action="@{/createcomment}" th:object="${comobj}" method="post">
       <div class="col-xs-4">
         <input class="form-control" type="text" th:field="*{commented}" PLACEHOLDER="What Do You think?"/>
           <input class="form-control" type="hidden" th:value="${photo.id}" id="photoid" name="photoid" /><br/>
         <button type="submit" class="btn btn-primary">Comment</button>
+          <input type="button" class="btn btn-primary" onclick="incrementValue()" th:value="${photo.id}" id="number" name="photoid" />
       </div>
   </form>
-<br/>
-    <div class="col-xs-4">
+<br/> <br/><br/>
 
-    <form>
-        <input type="text" disabled="disabled" id="number" value="0"/>
-        <input type="button" class="btn btn-primary" onclick="incrementValue()" value="LIKE ME PLS" />
-    </form>
-</div>
-
-
-    <!--<form th:action="@{/createcomment}" th:object="${comobj}" method="post">
-        <div class="col-xs-4">
-            <input class="form-control" type="hidden" th:value="${photo.id}" id="photoid" name="photoid" /><br/><br/>
-            <button type="submit" class="btn btn-primary">Thumb up</button>
-        </div>
-    </form>-->
     </div><!-- /.container -->
 
 <th:block th:replace="base :: footlinks"></th:block>
