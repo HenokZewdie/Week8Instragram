@@ -23,13 +23,6 @@
     <div class="col-xs-3" th:each="photo : ${Album}">
 
         <img th:utext="${photo.image}"  />
-
-        <form th:action="@{/comment}" th:object="${comobj}">
-            <input type="text" th:field="*{commented}"/>
-            <input type="hidden" th:utext="${photo.id}"/>
-            <button type="submit" class="btn btn-primary">Comment</button>
-        </form>
-
     </div>
 
     </div>

@@ -74,13 +74,33 @@ public class HomeController {
         String url=null;
         for(Photo pl:photoList){
             newList.add(pl.getImage());
-           url  = pl.getImage();
+            url  = pl.getImage();
         }
 
         model.addAttribute("srcSession", url);
         model.addAttribute("Album",photoList);
         return "profile";
     }
+
+    @RequestMapping(value = "/galgalery", method = RequestMethod.GET)
+    public String Gallery(Model model,  Principal principal){
+        model.addAttribute("photo",new Photo());
+        model.addAttribute("comobj",new Comment());
+        String loggedName = principal.getName();
+        Iterable<Photo> photoList = photoRepo.findByUsername(loggedName);
+        List<String> newList = new ArrayList<>();
+        String url=null;
+        for(Photo pl:photoList){
+            newList.add(pl.getImage());
+            url  = pl.getImage();
+        }
+
+        model.addAttribute("srcSession", url);
+        model.addAttribute("Album",photoList);
+        return "gallery";
+    }
+
+
 
 
     @RequestMapping(value = "/profile", method = RequestMethod.GET)
@@ -193,9 +213,9 @@ public class HomeController {
 
     @RequestMapping("/select/{id}")
     public String selectSomthign(@PathVariable("id") String type, Model model){
-                List<Photo> list = photoRepo.findAllByType(type);
-                model.addAttribute("images", list);
-                return "makememe";
+        List<Photo> list = photoRepo.findAllByType(type);
+        model.addAttribute("images", list);
+        return "makememe";
     }
 
     @GetMapping("/makememe")
@@ -244,11 +264,11 @@ public class HomeController {
         emailService.send(email);
     }
 
- /*   @RequestMapping(value = "/comment", method = RequestMethod.GET)
-    public String commentGet(Model model){
-        model.addAttribute("comobj",new Comment());
-        return "/comment";
-    }*/
+    /*   @RequestMapping(value = "/comment", method = RequestMethod.GET)
+       public String commentGet(Model model){
+           model.addAttribute("comobj",new Comment());
+           return "/comment";
+       }*/
     @RequestMapping(value = "/comment", method = RequestMethod.GET)
     public String commentPost(@ModelAttribute Comment comobj, Model model, Principal principal){
         model.addAttribute("comobj",new Comment());

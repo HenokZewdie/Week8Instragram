@@ -19,20 +19,12 @@
         <img th:utext="${photo.image}" /></a>
 
 
-  <!--  <form th:action="@{/createcomment}" th:object="${comobj}">
+    <form th:action="@{/createcomment}" th:object="${comobj}">
         <input class="form-control" type="text" th:field="*{commented}"/>
         <input class="form-control" type="hidden" th:value="${photo.id}" id="photoid" name="photoid" />
         <button type="submit" class="btn btn-primary">Comment</button>
 
-    </form>-->
-
-    <form th:action="@{/creatememe}" th:object="${photo}" method="post">
-        <div><label> Top Text : <input type="text" th:field="*{topmessage}"/> </label></div>
-        <div><label> Bottom Text: <input type="text" th:field="*{botmessage}"/> </label></div>
-        <div><input type="submit" value="Submit Meme"/></div>
-        <div><input type="hidden" th:field="*{image}"/></div>
     </form>
-
 
 </div><!-- /.container -->
 
