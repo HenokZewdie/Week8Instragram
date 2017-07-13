@@ -60,15 +60,19 @@ public class HomeController {
     }
 
     @RequestMapping(value = "/loginSuccess", method = RequestMethod.GET)
-    public String getLogin(Model model, Photo photo, Principal principal){
+    public String getLogin(Model model,  Principal principal){
+        model.addAttribute("photo",new Photo());
         String loggedName = principal.getName();
         Iterable<Photo> photoList = photoRepo.findByUsername(loggedName);
+        List<String> newList = new ArrayList<>();
         String url=null;
         for(Photo pl:photoList){
+            newList.add(pl.getImage());
            url  = pl.getImage();
         }
 
         model.addAttribute("srcSession", url);
+        model.addAttribute("Album",photoList);
         return "profile";
     }
 

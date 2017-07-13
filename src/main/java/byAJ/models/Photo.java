@@ -20,13 +20,15 @@ public class Photo {
     @Basic
     private Date createdAt = new Date();
 
-    private String username;
-
     private String topmessage;
+
+    private String username;
 
     private String botmessage;
 
     private String type;
+
+    private String effect;
 
     public Long getId() {
         return id;
@@ -92,6 +94,14 @@ public class Photo {
 
     public void setBotmessage(String botmessage) {
         this.botmessage = botmessage;
+    }
+
+    public String getEffect() {
+        return effect;
+    }
+
+    public void setEffect(String effect) {
+        this.effect = effect;
     }
 
     public String getUsername() {

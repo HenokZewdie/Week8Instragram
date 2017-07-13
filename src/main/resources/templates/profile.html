@@ -15,15 +15,13 @@
 <div class="container">
     <br /><br />
     <div class="container">
-        <div class="jumbotron">
 
+            <h3>Photo Album</h3></p>
+            <div class="row">      <!--<img th:utext="${srcSession}"/>-->
+            <div class="col-xs-3" th:each="photo : ${Album}">
 
-                <p style="color: #006699;" style="font-size: medium">
-            <h3>Profile Pic</h3></p>
-                  <img th:utext="${srcSession}"/>
-
-        </div>
-        <!-- Example row of columns -->
+                <img th:utext="${photo.image}"  /></div>
+                <!-- Example row of columns --></div>
         <div class="row">
             <div class="col-md-3">
                 <h2>Current User</h2>
