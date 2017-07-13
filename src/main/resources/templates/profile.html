@@ -24,9 +24,15 @@
 
         <img th:utext="${photo.image}"  />
 
-    </div>
+        <form th:action="@{/comment}" th:object="${comobj}">
+            <input type="text" th:field="*{commented}"/>
+            <input type="hidden" th:utext="${photo.id}"/>
+            <button type="submit" class="btn btn-primary">Comment</button>
+        </form>
+
     </div>
 
+    </div>
 
 <div class="row">
     <div class="col-md-3">

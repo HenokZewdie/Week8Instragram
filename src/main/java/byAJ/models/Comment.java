@@ -16,6 +16,15 @@ public class Comment {
     private String username;
     private String commented;
     private Date date;
+    private String photoid;
+
+    public String getPhotoid() {
+        return photoid;
+    }
+
+    public void setPhotoid(String photoid) {
+        this.photoid = photoid;
+    }
 
     public long getCommentid() {
         return commentid;

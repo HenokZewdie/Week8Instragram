@@ -67,6 +67,7 @@ public class HomeController {
     @RequestMapping(value = "/loginSuccess", method = RequestMethod.GET)
     public String getLogin(Model model,  Principal principal){
         model.addAttribute("photo",new Photo());
+        model.addAttribute("comobj",new Comment());
         String loggedName = principal.getName();
         Iterable<Photo> photoList = photoRepo.findByUsername(loggedName);
         List<String> newList = new ArrayList<>();
@@ -75,6 +76,7 @@ public class HomeController {
             newList.add(pl.getImage());
            url  = pl.getImage();
         }
+
         model.addAttribute("srcSession", url);
         model.addAttribute("Album",photoList);
         return "profile";
@@ -84,6 +86,7 @@ public class HomeController {
     @RequestMapping(value = "/profile", method = RequestMethod.GET)
     public String profile(Model model){
         model.addAttribute(new Photo());
+        model.addAttribute("com",new Comment());
         return "/profile";
     }
     @RequestMapping(value="/register", method = RequestMethod.GET)
@@ -197,34 +200,29 @@ public class HomeController {
 
     @GetMapping("/makememe")
     public String getMeme(Model model){
+        model.addAttribute("com", new Comment());
         Iterable<Photo> list = photoRepo.findAllByBotmessageEqualsAndTopmessageEquals(null, null);
         List<Photo> list2 = new ArrayList<Photo>();
         for(Photo p : list){
             boolean check = true;
             for(Photo p2 : list2){
                 if(p2.getType().equals(p.getType())){
-                    System.out.printf("1 %s %s\n", p2.getType(), p.getType());
                     check = false;
                     break;
                 }
                 else{
-                    System.out.printf("2 %s %s\n", p2.getType(), p.getType());
                     check = true;
                 }
             }
             if(check){
                 list2.add(p);
-
             }
             System.out.printf("3 %s\n", p.getType());
         }
         Set<Photo> myList = new HashSet<Photo>();
         for(Photo p2 : list2){
-            //System.out.printf("%s\n", p2.getType());
             myList.add(p2);
         }
-
-
         model.addAttribute("photoList", myList);
         return "makememe";
     }
@@ -246,16 +244,17 @@ public class HomeController {
         emailService.send(email);
     }
 
-    @RequestMapping(value = "/commenting", method = RequestMethod.GET)
+ /*   @RequestMapping(value = "/comment", method = RequestMethod.GET)
     public String commentGet(Model model){
-        model.addAttribute("comment", new Comment());
-        return "commenting";
-    }
-    @RequestMapping(value = "/commenting", method = RequestMethod.POST)
-    public String commentPost(@ModelAttribute Comment comment, Model model, Principal principal){
-        comment.setUsername(principal.getName());
-        model.addAttribute(new Date());
-        commentRepository.save(comment);
-        return "profile";
+        model.addAttribute("comobj",new Comment());
+        return "/comment";
+    }*/
+    @RequestMapping(value = "/comment", method = RequestMethod.GET)
+    public String commentPost(@ModelAttribute Comment comobj, Model model, Principal principal){
+        model.addAttribute("comobj",new Comment());
+        comobj.setUsername(principal.getName());
+        comobj.setDate(new Date());
+        commentRepository.save(comobj);
+        return "redirect:/loginSuccess";
     }
 }
