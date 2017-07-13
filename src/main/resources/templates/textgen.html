@@ -6,35 +6,53 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <title>Gallery</title>
+<script>
+    function incrementValue()
+    {
+        var value = parseInt(document.getElementById('number').value, 10);
+        value = isNaN(value) ? 0 : value;
+        value++;
+        document.getElementById('number').value = value;
+    }
 
-    <th:block th:replace="base :: head"></th:block>
+</script>
+    <th:block th:replace="base1 :: Mena"></th:block>
 </head>
 <body>
-<th:block th:replace="base :: nav"></th:block>
+<th:block th:replace="base1 :: navi"></th:block>
 
 <div class="container">
     <br /><br />
-    <h1>Spring Boot file upload example</h1>
+    <h1>Comment </h1>
     <a th:href="'/img/' + ${photo.id}" >
         <img th:utext="${photo.image}" /></a>
+<br/><br/>
 
 
-  <!--  <form th:action="@{/createcomment}" th:object="${comobj}">
-        <input class="form-control" type="text" th:field="*{commented}"/>
-        <input class="form-control" type="hidden" th:value="${photo.id}" id="photoid" name="photoid" />
+  <form th:action="@{/createcomment}" th:object="${comobj}" method="post">
+      <div class="col-xs-4">
+        <input class="form-control" type="text" th:field="*{commented}" PLACEHOLDER="What Do You think?"/>
+          <input class="form-control" type="hidden" th:value="${photo.id}" id="photoid" name="photoid" /><br/>
         <button type="submit" class="btn btn-primary">Comment</button>
+      </div>
+  </form>
+<br/>
+    <div class="col-xs-4">
 
-    </form>-->
-
-    <form th:action="@{/creatememe}" th:object="${photo}" method="post">
-        <div><label> Top Text : <input type="text" th:field="*{topmessage}"/> </label></div>
-        <div><label> Bottom Text: <input type="text" th:field="*{botmessage}"/> </label></div>
-        <div><input type="submit" value="Submit Meme"/></div>
-        <div><input type="hidden" th:field="*{image}"/></div>
+    <form>
+        <input type="text" disabled="disabled" id="number" value="0"/>
+        <input type="button" class="btn btn-primary" onclick="incrementValue()" value="LIKE ME PLS" />
     </form>
+</div>
 
 
-</div><!-- /.container -->
+    <!--<form th:action="@{/createcomment}" th:object="${comobj}" method="post">
+        <div class="col-xs-4">
+            <input class="form-control" type="hidden" th:value="${photo.id}" id="photoid" name="photoid" /><br/><br/>
+            <button type="submit" class="btn btn-primary">Thumb up</button>
+        </div>
+    </form>-->
+    </div><!-- /.container -->
 
 <th:block th:replace="base :: footlinks"></th:block>
 </body>

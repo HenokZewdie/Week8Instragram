@@ -184,15 +184,18 @@ public class HomeController {
         }
         return "gallery";
     }
-    @RequestMapping("/img/{id}")
-    public String something(@PathVariable("id") long id, Model model){
-        model.addAttribute("photo", photoRepo.findById(id));
-        return "textgen";
-    }
+
     @RequestMapping("/gallery")
     public String gallery(Model model){
         setupGallery(model);
         return "gallery";
+    }
+
+    @RequestMapping("/img/{id}")
+    public String something(@PathVariable("id") long id, Model model, Comment comment){
+        model.addAttribute("photo", photoRepo.findById(id));
+        model.addAttribute("comobj",new Comment());
+        return "textgen";
     }
 
     @RequestMapping("/textgen")
@@ -264,17 +267,31 @@ public class HomeController {
         emailService.send(email);
     }
 
-    /*   @RequestMapping(value = "/comment", method = RequestMethod.GET)
+       @RequestMapping(value = "/createcomment", method = RequestMethod.GET)
        public String commentGet(Model model){
            model.addAttribute("comobj",new Comment());
-           return "/comment";
-       }*/
-    @RequestMapping(value = "/comment", method = RequestMethod.GET)
+           return "/createcomment";
+       }
+    @RequestMapping(value = "/createcomment", method = RequestMethod.POST)
     public String commentPost(@ModelAttribute Comment comobj, Model model, Principal principal){
         model.addAttribute("comobj",new Comment());
         comobj.setUsername(principal.getName());
         comobj.setDate(new Date());
         commentRepository.save(comobj);
         return "redirect:/loginSuccess";
+    }
+    @RequestMapping(value = "/showcomment", method = RequestMethod.GET)
+    public String ShowcommentGet(Model model){
+        model.addAttribute("comobj",new Comment());
+        model.addAttribute(new Photo());
+        return "showcomment";
+    }
+    @RequestMapping(value = "/showcomment", method = RequestMethod.POST)
+    public String ShowcommentPost(@ModelAttribute Comment comment, Model model){
+        model.addAttribute("comobj",new Comment());
+        model.addAttribute(new Photo());
+        Iterable<Comment> commentList = commentRepository.findByQuery();
+        model.addAttribute("commentList",commentList);
+        return "display";
     }
 }

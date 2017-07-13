@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="www.thymeleaf.org">
+<head th:replace="base1 :: Mena">
+    <meta charset="UTF-8" />
+    <title>Title</title>
+</head>
+<body>
+<div class="container">
+    <div class="jumbotron">
+
+    <nav class="navbar navbar-default" th:replace="base1::navi"> </nav>
+
+    <table class="table table-hover">
+
+        <tr>
+            <th>Photo</th>
+            <th>date</th>
+            <th>User</th>
+            <th>image</th>
+
+        </tr>
+
+        <div th:each="loopin : ${commentList}">
+            <tr>
+                <td th:text = "${loopin.commented}"></td>
+                <td th:text = "${#dates.format(loopin.date, 'MMM-dd-yyyy')}"></td>
+                <td th:text = "${loopin.username}"></td>
+                <td th:text = "${loopin.image}"></td>
+
+
+                <!--<td th:text = "${#dates.format(mylink.date, 'MMM-dd-yyyy')}"></td>  #dates.format(sprint.releaseDate, 'dd-MMM-yyyy')-->
+            </tr>
+        </div>
+    </table>
+        </div>
+    </div>
+</body>
+</html>
