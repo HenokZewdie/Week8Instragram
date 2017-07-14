@@ -3,35 +3,43 @@
 <head th:replace="base1 :: Mena">
     <meta charset="UTF-8" />
     <title>Title</title>
+    <script>
+        function change()
+    {
+        document.getElementById("myButton").value="Following";
+    }
+    </script>
+
 </head>
 <body>
 <div class="container">
     <div class="jumbotron">
 
-    <nav class="navbar navbar-default" th:replace="base1::navi"> </nav>
+        <nav class="navbar navbar-default" th:replace="base1::navi"> </nav>
 
-    <table class="table table-hover">
+        <table class="table table-hover">
 
-        <tr>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>User Name</th>
-            <th>Friend Zone</th>
-
-        </tr>
-
-        <div th:each="loopin : ${status}">
             <tr>
-                <td th:text = "${loopin.firstName}"></td>
-                <td th:text = "${loopin.lastName}"></td>
-                <td th:text = "${loopin.username}"></td>
-                <td th:text = "${loopin.status}"></td>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>User Name</th>
+                <th>Friend Zone</th>
 
-                <!--<td th:text = "${#dates.format(mylink.date, 'MMM-dd-yyyy')}"></td>  #dates.format(sprint.releaseDate, 'dd-MMM-yyyy')-->
             </tr>
-        </div>
-    </table>
-        </div>
+
+            <tr th:each="link : ${status}">
+
+                    <td th:text = "${link.firstName}"></td>
+                    <td th:text = "${link.lastName}"></td>
+                    <td th:text = "${link.username}"></td>
+                    <td><input type="button" onclick="this.value='Following'" id="myButton" class="btn btn-primary" th:value="${link.status}" />
+
+                    </td>
+
+                   <!--<td th:text = "${#dates.format(mylink.date, 'MMM-dd-yyyy')}"></td>  #dates.format(sprint.releaseDate, 'dd-MMM-yyyy')-->
+            </tr>
+       </table>
     </div>
+</div>
 </body>
 </html>

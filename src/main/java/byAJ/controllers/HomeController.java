@@ -323,11 +323,11 @@ public class HomeController {
         return "redirect:/galgalery";
     }
     @RequestMapping(value = "/follow", method = RequestMethod.GET)
-    public String follow(@ModelAttribute User user, Model model){
-
-        model.addAttribute("user", new User());
+    public String follow(Model model){
+        model.addAttribute("userfollow", new User());
         Iterable<User> useList = userRepository.findAll();
         model.addAttribute("status", useList);
      return "display";
     }
+
 }

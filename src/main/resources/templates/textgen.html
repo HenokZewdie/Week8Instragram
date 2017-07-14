@@ -40,7 +40,7 @@
   </form>
 <br/> <br/><br/>
     <form th:action="@{/likeme}" th:object="${liked}" method="post">
-        <!--<input type="button" class="btn btn-primary" onclick="incrementValue()" th:value="${comment.liked}" id="number" name="photoid" />-->
+        <input type="button" class="btn btn-primary" onclick="incrementValue()" th:value="${photo.id}" id="photoid" name="photoid" />
         <input class="col-xs-4" type="hidden" disabled="disabled" th:value="${photo.id}" id="photoid1" name="photoid" /><br/>
         <input class="col-xs-4" type="text" disabled="disabled" th:value="${photo.liked}" id="liked" name="liked" /><br/>
         <button type="submit" class="btn btn-primary">ThumbsUp</button>
