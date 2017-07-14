@@ -1,38 +1,29 @@
 package byAJ.controllers;
 
 import byAJ.configs.CloudinaryConfig;
-import byAJ.models.Comment;
-import byAJ.models.Photo;
-import byAJ.models.User;
+import byAJ.models.*;
 import byAJ.repositories.CommentRepository;
+import byAJ.repositories.LikedRepository;
 import byAJ.repositories.PhotoRepository;
 import byAJ.services.UserService;
 import byAJ.validators.UserValidator;
-import com.cloudinary.Singleton;
-import com.cloudinary.StoredFile;
 import com.cloudinary.utils.ObjectUtils;
 import com.google.common.collect.Lists;
 import it.ozimov.springboot.mail.model.Email;
 import it.ozimov.springboot.mail.model.defaultimpl.DefaultEmail;
 import it.ozimov.springboot.mail.service.EmailService;
-import org.apache.commons.collections.map.HashedMap;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import com.cloudinary.Cloudinary;
 
 import javax.mail.internet.InternetAddress;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.security.Principal;
 import java.util.*;
 
@@ -53,6 +44,8 @@ public class HomeController {
 
     @Autowired
     private CommentRepository commentRepository;
+    @Autowired
+    private LikedRepository likedRepository;
 
     @RequestMapping("/")
     public String index(){
@@ -63,7 +56,7 @@ public class HomeController {
     public String login(){
         return "login";
     }
-
+    long idSessio, sessionNumber=0;
     @RequestMapping(value = "/loginSuccess", method = RequestMethod.GET)
     public String getLogin(Model model,  Principal principal){
         model.addAttribute("photo",new Photo());
@@ -86,6 +79,7 @@ public class HomeController {
     public String Gallery(Model model,  Principal principal){
         model.addAttribute("photo",new Photo());
         model.addAttribute("comobj",new Comment());
+        model.addAttribute("liked", new Liked());
         String loggedName = principal.getName();
         Iterable<Photo> photoList = photoRepo.findByUsername(loggedName);
         List<String> newList = new ArrayList<>();
@@ -192,9 +186,13 @@ public class HomeController {
     }
 
     @RequestMapping("/img/{id}")
-    public String something(@PathVariable("id") long id, Model model, Comment comment){
+    public String something(@PathVariable("id") long id, Model model, Comment comment, Liked liked){
         model.addAttribute("photo", photoRepo.findById(id));
         model.addAttribute("comobj",new Comment());
+        model.addAttribute("liked",new Liked());
+        model.addAttribute("foto", new Photo());
+        idSessio=id;
+        sessionNumber = likedRepository.findDistinc(id);
         return "textgen";
     }
 
@@ -293,5 +291,21 @@ public class HomeController {
         Iterable<Comment> commentList = commentRepository.findByQuery();
         model.addAttribute("commentList",commentList);
         return "display";
+    }
+    @RequestMapping(value = "/likeme", method = RequestMethod.GET)
+    public String Likeme(Model model){
+        model.addAttribute("liked",new Liked());
+        return "likeme";
+    }
+    @RequestMapping(value = "/likeme", method = RequestMethod.POST)
+    public String LikemePOST( @ModelAttribute Liked liked, Model model, Principal principal){
+        model.addAttribute("photo",new Photo());
+        Photo photo= new Photo();
+        System.out.print("NUMBER IS " + sessionNumber);
+        liked.setLikednum(sessionNumber + 1);
+        liked.setUsername(principal.getName());
+        liked.setPhotoid(idSessio);
+        likedRepository.save(liked);
+        return "redirect:/galgalery";
     }
 }
