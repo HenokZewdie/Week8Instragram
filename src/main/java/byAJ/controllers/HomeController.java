@@ -147,12 +147,13 @@ public class HomeController {
     @GetMapping("/upload")
     public String uploadForm(Model model) {
         model.addAttribute("p", new Photo());
+        model.addAttribute("liked", new Liked());
         return "upload";
     }
 
     @PostMapping("/upload")
     public String singleImageUpload(@RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes,
-                                    Model model, @ModelAttribute Photo p, Principal principal){
+                                    Model model, @ModelAttribute Photo p, Principal principal, Liked liked){
 
         if (file.isEmpty()){
             redirectAttributes.addFlashAttribute("message","Please select a file to upload");
@@ -172,6 +173,10 @@ public class HomeController {
             p.setUsername(principal.getName());
             photoRepo.save(p);
             setupGallery(model);
+            liked.setUsername(principal.getName());
+            liked.setPhotoid(p.getId());
+            liked.setLikednum(0);
+            likedRepository.save(liked);
         } catch (IOException e){
             e.printStackTrace();
             model.addAttribute("message", "Sorry I can't upload that!");
@@ -192,19 +197,24 @@ public class HomeController {
         model.addAttribute("liked",new Liked());
         model.addAttribute("foto", new Photo());
         idSessio=id;
-        sessionNumber = likedRepository.findDistinc(id);
-        return "textgen";
+        sessionNumber = likedRepository.findByPhotoid(id);
+        if(sessionNumber==0){return "textgen";}
+
+        else {sessionNumber = likedRepository.findDistinc(id);
+        return "textgen";}
     }
 
     @RequestMapping("/textgen")
     public String textgen(Model model){
         model.addAttribute("photo", new Photo());
+        model.addAttribute("liked", new Liked());
         return "textgen";
     }
 
     @PostMapping("/creatememe")
     public String creatememe(@ModelAttribute Photo photo, Model model, Principal principal) throws UnsupportedEncodingException {
         User u = userService.findByUsername(principal.getName());
+        model.addAttribute("liked", new Liked());
         photoRepo.save(photo);
         setupGallery(model);
         model.addAttribute("Meme created");
@@ -216,6 +226,7 @@ public class HomeController {
     public String selectSomthign(@PathVariable("id") String type, Model model){
         List<Photo> list = photoRepo.findAllByType(type);
         model.addAttribute("images", list);
+        model.addAttribute("liked", new Liked());
         return "makememe";
     }
 
