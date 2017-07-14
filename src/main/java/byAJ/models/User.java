@@ -21,10 +21,10 @@ public class User {
     @Column(name = "password")
     private String password;
 
-    @Column(name = "first_name")
+    @Column(name = "firstName")
     private String firstName;
 
-    @Column(name = "last_name")
+    @Column(name = "lastName")
     private String lastName;
 
     @Column(name = "enabled")
@@ -32,6 +32,8 @@ public class User {
 
     @Column(name = "username")
     private String username;
+
+    private String status;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(joinColumns = @JoinColumn(name = "user_id"),inverseJoinColumns = @JoinColumn(name = "role_id"))
@@ -114,4 +116,11 @@ public class User {
         this.roles = roles;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 }

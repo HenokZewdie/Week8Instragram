@@ -34,7 +34,6 @@
   <form th:action="@{/createcomment}" th:object="${comobj}" method="post">
       <div class="col-xs-4">
         <input class="form-control" type="text" th:field="*{commented}" PLACEHOLDER="What Do You think?"/>
-          <input class="form-control" type="hidden" th:value="${photo.id}" id="photoid" name="photoid" /><br/>
         <button type="submit" class="btn btn-primary">Comment</button>
 
       </div>
@@ -42,8 +41,8 @@
 <br/> <br/><br/>
     <form th:action="@{/likeme}" th:object="${liked}" method="post">
         <!--<input type="button" class="btn btn-primary" onclick="incrementValue()" th:value="${comment.liked}" id="number" name="photoid" />-->
-        <input class="form-control" type="text" disabled="disabled" th:value="${photo.id}" id="photoid1" name="photoid" /><br/>
-        <input class="form-control" type="text" disabled="disabled" th:value="${liked.likednum}" id="likednum" name="likednum" /><br/>
+        <input class="col-xs-4" type="hidden" disabled="disabled" th:value="${photo.id}" id="photoid1" name="photoid" /><br/>
+        <input class="col-xs-4" type="text" disabled="disabled" th:value="${photo.liked}" id="liked" name="liked" /><br/>
         <button type="submit" class="btn btn-primary">ThumbsUp</button>
     </form>
 

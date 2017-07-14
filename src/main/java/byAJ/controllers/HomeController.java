@@ -5,6 +5,7 @@ import byAJ.models.*;
 import byAJ.repositories.CommentRepository;
 import byAJ.repositories.LikedRepository;
 import byAJ.repositories.PhotoRepository;
+import byAJ.repositories.UserRepository;
 import byAJ.services.UserService;
 import byAJ.validators.UserValidator;
 import com.cloudinary.utils.ObjectUtils;
@@ -41,6 +42,9 @@ public class HomeController {
 
     @Autowired
     private PhotoRepository photoRepo;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @Autowired
     private CommentRepository commentRepository;
@@ -129,6 +133,7 @@ public class HomeController {
         if (result.hasErrors()) {
             return "registration";
         } else {
+            user.setStatus("Follow");
             userService.saveUser(user);
             model.addAttribute("message", "User Account Successfully Created");
         }
@@ -197,11 +202,9 @@ public class HomeController {
         model.addAttribute("liked",new Liked());
         model.addAttribute("foto", new Photo());
         idSessio=id;
-        sessionNumber = likedRepository.findByPhotoid(id);
-        if(sessionNumber==0){return "textgen";}
+        sessionNumber = likedRepository.findDistinc(id);
 
-        else {sessionNumber = likedRepository.findDistinc(id);
-        return "textgen";}
+        return "textgen";
     }
 
     @RequestMapping("/textgen")
@@ -318,5 +321,13 @@ public class HomeController {
         liked.setPhotoid(idSessio);
         likedRepository.save(liked);
         return "redirect:/galgalery";
+    }
+    @RequestMapping(value = "/follow", method = RequestMethod.GET)
+    public String follow(@ModelAttribute User user, Model model){
+
+        model.addAttribute("user", new User());
+        Iterable<User> useList = userRepository.findAll();
+        model.addAttribute("status", useList);
+     return "display";
     }
 }

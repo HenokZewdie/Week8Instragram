@@ -13,20 +13,19 @@
     <table class="table table-hover">
 
         <tr>
-            <th>Photo</th>
-            <th>date</th>
-            <th>User</th>
-            <th>image</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>User Name</th>
+            <th>Friend Zone</th>
 
         </tr>
 
-        <div th:each="loopin : ${commentList}">
+        <div th:each="loopin : ${status}">
             <tr>
-                <td th:text = "${loopin.commented}"></td>
-                <td th:text = "${#dates.format(loopin.date, 'MMM-dd-yyyy')}"></td>
+                <td th:text = "${loopin.firstName}"></td>
+                <td th:text = "${loopin.lastName}"></td>
                 <td th:text = "${loopin.username}"></td>
-                <td th:text = "${loopin.image}"></td>
-
+                <td th:text = "${loopin.status}"></td>
 
                 <!--<td th:text = "${#dates.format(mylink.date, 'MMM-dd-yyyy')}"></td>  #dates.format(sprint.releaseDate, 'dd-MMM-yyyy')-->
             </tr>
