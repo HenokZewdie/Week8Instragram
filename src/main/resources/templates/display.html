@@ -3,14 +3,7 @@
 <head th:replace="base1 :: Mena">
     <meta charset="UTF-8" />
     <title>Title</title>
-    <script>
-        function change()
-    {
-        document.getElementById("myButton").value="Following";
-    }
-    </script>
-
-</head>
+ </head>
 <body>
 <div class="container">
     <div class="jumbotron">
@@ -32,13 +25,13 @@
                     <td th:text = "${link.firstName}"></td>
                     <td th:text = "${link.lastName}"></td>
                     <td th:text = "${link.username}"></td>
-                    <td><input type="button" onclick="this.value='Following'" id="myButton" class="btn btn-primary" th:value="${link.status}" />
+                    <td><input type="button" th:value="${link.status}" id="myButton" class="btn btn-primary"/>
 
                     </td>
-
                    <!--<td th:text = "${#dates.format(mylink.date, 'MMM-dd-yyyy')}"></td>  #dates.format(sprint.releaseDate, 'dd-MMM-yyyy')-->
             </tr>
        </table>
+
     </div>
 </div>
 </body>

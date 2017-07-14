@@ -26,8 +26,6 @@ public class Photo {
 
     private String botmessage;
 
-    private long liked;
-
     private String type;
 
     private String effect;
@@ -114,11 +112,4 @@ public class Photo {
         this.username = username;
     }
 
-    public long getLiked() {
-        return liked;
-    }
-
-    public void setLiked(long liked) {
-        this.liked = liked;
-    }
 }

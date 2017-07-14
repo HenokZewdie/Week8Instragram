@@ -1,33 +1,19 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="www.thymeleaf.org " xmlns:sec="www.thymeleaf.org/extras/spring-security">
-<head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>Gallery</title>
-
-    <th:block th:replace="base :: head"></th:block>
+<html lang="en" xmlns:th="www.thymeleaf.org">
+<head th:replace="base1 :: Mena">
+    <meta charset="UTF-8" />
+    <title>Title</title>
 </head>
 <body>
-<th:block th:replace="base :: nav"></th:block>
-
 <div class="container">
-    <br /><br />
-    <h1>Spring Boot file upload example</h1>
-    <a th:href="'/img/' + ${photo.id}" >
-        <img th:utext="${photo.image}" /></a>
+    <div class="jumbotron">
 
+        <nav class="navbar navbar-default" th:replace="base1::navi"> </nav>
 
-    <form th:action="@{/createcomment}" th:object="${comobj}">
-        <input class="form-control" type="text" th:field="*{commented}"/>
-        <input class="form-control" type="hidden" th:value="${photo.id}" id="photoid" name="photoid" />
-        <button type="submit" class="btn btn-primary">Comment</button>
+        <div th:utext="${photo.id}" ></div>
+        <img th:utext="${photo.image}" />
 
-    </form>
-
-</div><!-- /.container -->
-
-<th:block th:replace="base :: footlinks"></th:block>
+    </div>
+</div>
 </body>
 </html>
